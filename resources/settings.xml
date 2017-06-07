@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="General">
+	
+		<setting label="Enable debug" type="bool" id="enable" default="false"/>
+	
+		<setting label="Write qualifier to clipboard" type="bool" id="copy_to_clipboard" default="false"/>
+		<setting label="Save qualifier to file" type="bool" id="save_to_file" default="false"/>
+		<setting label="Path"	type="folder" id="file_path"	visible="eq(-1,true)" />
+
+		<setting label="Host" type="text"   id="host"	default="localhost"/>		
+    </category>
+
+</settings>
