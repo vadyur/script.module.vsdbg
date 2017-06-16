@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.vsdbg" name="Visual Studio debug" version="0.0.1" provider-name="-=Vd=-">
+<addon id="script.module.vsdbg" name="Visual Studio debug" version="0.1.0" provider-name="-=Vd=-">
     <extension point="xbmc.python.module" library="lib"/>
 	  <extension point="xbmc.python.script" library="main.py">
 		    <provides>executable</provides>
