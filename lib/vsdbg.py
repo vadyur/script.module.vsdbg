@@ -25,7 +25,7 @@ class Settings(object):
 s = Settings()
 
 import ptvsd
-import subprocess
+import subprocess, os
 
 def write_to_clipboard(output):
     process = subprocess.Popen(
@@ -36,6 +36,31 @@ def read_from_clipboard():
     return subprocess.check_output(
         'pbpaste', env={'LANG': 'en_US.UTF-8'}).decode('utf-8')
 
+def get_tb():
+	import traceback, xbmc
+	st = traceback.extract_stack(limit=5)
+
+	for filename, lineno, name, line in reversed(st):
+		if 'vsdbg' not in filename:
+			filename = os.path.relpath(filename, xbmc.translatePath('special://home/addons')).replace('\\', '/')
+			item = '  File "%s", line %d' % (filename, lineno)
+			return item
+	return ''
+
+def need_to_debug(cmd=''):
+	import xbmcgui
+	dlg = xbmcgui.Dialog()
+
+	line = 'Debug Script?'
+	if cmd:
+		line += ' Qualifier is: {0}.'.format(cmd)
+
+	line += '\n' + get_tb()
+
+	res = dlg.yesno('Python tools for Visual Studio debug', line, yeslabel='Break', nolabel='Continue', autoclose=15000)
+
+	return res
+
 def _attach(wait=True):
 	if not s._debug:
 		return False
@@ -43,9 +68,12 @@ def _attach(wait=True):
 	import random, os
 	port = random.randint(6600, 6800)
 
-	ptvsd.enable_attach(secret = None, address = ('0.0.0.0', port))
-
 	cmd = "tcp://%s:%d" % (s._host, port)
+
+	if not need_to_debug(cmd):
+		return False
+
+	ptvsd.enable_attach(secret = None, address = ('0.0.0.0', port))
 
 	if s._copy_to_clip:
 		import platform
@@ -68,9 +96,10 @@ def _attach(wait=True):
 
 	return True
 
-
 def _bp(wait=True):
 	if not ptvsd.is_attached():
-		_attach(wait)
-
-	ptvsd.break_into_debugger()
+		if _attach(wait):
+			ptvsd.break_into_debugger()
+	else:
+		if need_to_debug():
+			ptvsd.break_into_debugger()
