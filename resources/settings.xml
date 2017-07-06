@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-    <category label="General">
+  <category label="General">
 	
 		<setting label="Enable debug" type="bool" id="enable" default="false"/>
 	
@@ -9,6 +9,11 @@
 		<setting label="Path"	type="folder" id="file_path"	visible="eq(-1,true)" />
 
 		<setting label="Host" type="text"   id="host"	default="localhost"/>		
-    </category>
+  </category>
+
+  <category label="Version">
+    <setting label="VS Version" type="select" id="version" values="vs2015|vs2017" default="vs2015"/>
+  </category>
+
 
 </settings>

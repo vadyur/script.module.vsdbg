@@ -21,10 +21,18 @@ class Settings(object):
 			self._path = addon.getSetting('file_path')
 
 		self._host = addon.getSetting('host')
+		self._version = addon.getSetting('version')
 
 s = Settings()
 
+#import ptvsd31 as ptvsd
+import sys, os
+cur = os.path.dirname(__file__)
+path = os.path.join(cur, s._version)
+sys.path.insert(0, os.path.normpath(path))
+
 import ptvsd
+
 import subprocess, os
 
 def write_to_clipboard(output):
@@ -68,12 +76,12 @@ def _attach(wait=True):
 	import random, os
 	port = random.randint(6600, 6800)
 
-	cmd = "tcp://%s:%d" % (s._host, port)
+	cmd = "tcp://vsdbg@%s:%d" % (s._host, port)
 
 	if not need_to_debug(cmd):
 		return False
 
-	ptvsd.enable_attach(secret = None, address = ('0.0.0.0', port))
+	ptvsd.enable_attach(secret = 'vsdbg', address = ('0.0.0.0', port))
 
 	if s._copy_to_clip:
 		import platform
