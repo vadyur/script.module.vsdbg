@@ -67,6 +67,17 @@ def need_to_debug(cmd=''):
 
 	res = dlg.yesno('Python tools for Visual Studio debug', line, yeslabel='Break', nolabel='Continue', autoclose=15000)
 
+	if res:
+		import xbmc
+		import sys
+		try:
+			handle = int(sys.argv[1])
+			line = sys.argv[1] + '> ' + line
+		except:
+			pass
+
+		xbmc.log(line)
+
 	return res
 
 def _attach(wait=True):
