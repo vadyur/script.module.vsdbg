@@ -1,6 +1,6 @@
 # ptvsd wrapper for debugpy
 
-import os
+import os, sys
 from os.path import expanduser, join
 home = expanduser("~")
 
@@ -28,6 +28,8 @@ debug_this_thread = debugpy.debug_this_thread
 is_attached = debugpy.is_client_connected
 
 def enable_attach(address, *args, **kwargs):
+    import xbmc
+    xbmc.log('enable_attach!!!')
     debugpy.listen(address)
 
 wait_for_attach = debugpy.wait_for_client

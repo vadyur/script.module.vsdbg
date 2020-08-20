@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.vsdbg" name="Visual Studio debug" version="0.2.2" provider-name="-=Vd=-">
+    <requires>
+        <import addon="script.module.web-pdb" />
+    </requires>
     <extension point="xbmc.python.module" library="lib"/>
 	  <extension point="xbmc.python.script" library="main.py">
 		    <provides>executable</provides>
