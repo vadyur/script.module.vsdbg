@@ -12,7 +12,7 @@
   </category>
 
   <category label="Version">
-    <setting label="VS Version" type="select" id="version" values="vs2015|vs2017|vs2019|vscode" default="vs2019"/>
+    <setting label="VS Version" type="select" id="version" values="vs2015|vs2017|vs2019|vscode|webpdb" default="vs2019"/>
   </category>
 
 
