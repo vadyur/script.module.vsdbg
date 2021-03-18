@@ -4,6 +4,7 @@ class Settings(object):
 	_copy_to_clip=True
 	_save_to_file=False
 	_path = None
+	_is_vscode = False
 
 	def __init__(self, addon=None):
 		try:
@@ -22,6 +23,8 @@ class Settings(object):
 
 		self._host = addon.getSetting('host')
 		self._version = addon.getSetting('version')
+
+		self._is_vscode = self._version == 'vscode'
 
 s = Settings()
 
@@ -85,16 +88,20 @@ def _attach(wait=True):
 		return False
 
 	import random, os
-	port = random.randint(6600, 6800)
 
-	cmd = "tcp://vsdbg@%s:%d" % (s._host, port)
+	if s._is_vscode:
+		port = 5678
+		cmd = None
+	else:
+		port = random.randint(6600, 6800)
+		cmd = "tcp://%s:%d" % (s._host, port)
 
 	if not need_to_debug(cmd):
 		return False
 
-	ptvsd.enable_attach(secret = 'vsdbg', address = ('0.0.0.0', port))
+	ptvsd.enable_attach(address = ('0.0.0.0', port))
 
-	if s._copy_to_clip:
+	if s._copy_to_clip and cmd:
 		import platform
 
 		if platform.system() == 'Windows':
@@ -104,7 +111,7 @@ def _attach(wait=True):
 		else:
 			print platform.system() + ' no detect, cmd = ' + cmd
 
-	if s._save_to_file:
+	if s._save_to_file and cmd:
 		import xbmcvfs
 		f = xbmcvfs.File(os.path.join(s._path, 'qualifier.txt'), 'w')
 		f.write(cmd)
@@ -122,3 +129,5 @@ def _bp(wait=True):
 	else:
 		if need_to_debug():
 			ptvsd.break_into_debugger()
+
+breakpoint = _bp
