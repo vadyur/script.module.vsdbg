@@ -37,7 +37,7 @@ def launch_server(argv):
     from debugpy.adapter.__main__ import main, _parse_argv
     main(_parse_argv(argv))
 
-    os.name = _name
+    os.name = name
 
 
 class MyPopen:
@@ -45,10 +45,10 @@ class MyPopen:
         import json
         from debugpy.adapter.__main__ import main, _parse_argv
         argv = args[0][1:]
-    	import xbmc
+        import xbmc
         this_script = 'special://home/addons/script.module.vsdbg/lib/vscode/ptvsd.py'
         params = ','.join(argv)
-    	xbmc.executebuiltin('RunScript({},launch_server,{})'.format(this_script, params))
+        xbmc.executebuiltin('RunScript({},launch_server,{})'.format(this_script, params))
 
     def wait(self):
         #import web_pdb

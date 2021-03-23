@@ -109,7 +109,7 @@ def _attach(wait=True):
 		elif platform.system() == 'Darwin':
 			write_to_clipboard(cmd)
 		else:
-			print platform.system() + ' no detect, cmd = ' + cmd
+			print (platform.system() + ' no detect, cmd = ' + cmd)
 
 	if s._save_to_file and cmd:
 		import xbmcvfs
