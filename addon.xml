@@ -8,5 +8,8 @@
         <platform>all</platform>
         <language>en</language>
         <summary lang="en">Python tools for Visual Studio debug</summary>
+        <assets>
+            <icon>icon.png</icon>
+        </assets>
     </extension>
 </addon>
