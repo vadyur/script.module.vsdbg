@@ -1,3 +1,8 @@
+try:
+    from xbmcvfs import translatePath
+except ImportError:
+    from xbmc import translatePath
+
 class Settings(object):
 	_debug = True
 	_host='localhost'
@@ -53,7 +58,7 @@ def get_tb():
 
 	for filename, lineno, name, line in reversed(st):
 		if 'vsdbg' not in filename:
-			filename = os.path.relpath(filename, xbmc.translatePath('special://home/addons')).replace('\\', '/')
+			filename = os.path.relpath(filename, translatePath('special://home/addons')).replace('\\', '/')
 			item = '  File "%s", line %d' % (filename, lineno)
 			return item
 	return ''
