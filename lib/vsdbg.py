@@ -56,6 +56,11 @@ def get_tb():
 	import traceback, xbmc
 	st = traceback.extract_stack(limit=5)
 
+	try:
+		from xbmc import translatePath
+	except ImportError:
+		from xbmcvfs import translatePath
+
 	for filename, lineno, name, line in reversed(st):
 		if 'vsdbg' not in filename:
 			filename = os.path.relpath(filename, translatePath('special://home/addons')).replace('\\', '/')
